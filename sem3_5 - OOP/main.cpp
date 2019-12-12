@@ -1,7 +1,8 @@
 #include <iostream>
 #include "stdafx.h"
+#include "Seminar3.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	Seminar3 <int*>semi3;
 }
