@@ -4,15 +4,278 @@
 
 template <class T>
 class Seminar3 :
-	private Root
+	private Root<int*>
 {
 public:
-	int array_size(const unsigned int max_size);
+	Seminar3()
+	{
+		Menu();
+	}
 
-	void Input(T t_array, unsigned int size) override;
-	void Output(const T t_array, unsigned int size) override;
+	void Menu() override
+	{
+		char selector = 'a';															//main menu selector
+
+		const unsigned int max_size = 50;									//maximal size of the array
+		unsigned int size = 0;												//user-defined size of the array, 0 by default
+
+		int* t_array = new int[max_size];									//t_array announcement
+		int* sorted_array = new int[max_size];								//sorted array
+
+		//states
+		bool is_created = false;											//whether the array is created or not
+		bool is_sorted = false;												//state of the array (sorted/not sorted)
+
+
+
+		//menu loop
+		do
+		{
+			cout << endl;
+			cout << "----SEMINAR 3 MENU----" << endl;
+			cout << " 1. Array input" << endl;
+			cout << " 2. Sort the array" << endl;
+			cout << " 3. Display the tasks" << endl;
+			cout << " 5. Exit" << endl;
+			cout << "Your selection: ";
+			cin >> selector;
+
+
+			switch (selector)
+			{
+				//input() is called
+			case '1':
+			{
+				//overwrite check
+				if (is_created == true)
+				{
+					char selector = 'a';
+
+					//overwrite confirmation
+					cout << endl << "The array is already created. If you proceed it will be overwritten. Continue? (y/n)" << endl;
+					while ((selector != 'y') && (selector != 'n'))
+					{
+						cout << "Your selection: ";
+						cin >> selector;
+						switch (selector)
+						{
+							//if 'y' re-enter <size>
+						case 'y':
+						{
+							size = array_size(max_size);
+							Input(t_array, size);																	//INPUT() is called -> t_array
+							is_created = true;																		//array state change (creation)
+							is_sorted = false;
+
+							break;
+						}
+
+						//if 'n' do not change <size>
+						case 'n': break;
+
+						default: cout << "Wrong input, try again." << endl;
+							break;
+						}
+					}
+				}
+				else
+				{
+					size = array_size(max_size);
+					Input(t_array, size);																	//INPUT() is called -> t_array
+					is_created = true;																		//array state change (creation)
+				}
+
+				break;
+			}
+
+			//sort() is called
+			case '2':
+			{
+				if (is_created == false)
+				{
+					cout << "Error: The array is not created." << endl;
+					break;
+				}
+				else
+				{
+					cout << "Sorted." << endl;//DEBUG
+					//sorted_array = sort(t_array, size);																							//SORT() is called -> t_array
+					is_sorted = true;
+					break;
+				}
+
+			}
+
+			//output() check and call
+			case '3':
+			{
+				//check whether the array is created
+				if (is_created == true)
+				{
+					if (is_sorted == true)
+					{
+						char o_sel = 'a';
+						while ((o_sel != 'o') && (o_sel != 's') && (o_sel != 'c'))
+						{
+							cout << endl << "Do you want to use the original array, the sorted array or to cancel? (o/s/c): ";
+							cin >> o_sel;
+
+							switch (o_sel)
+							{
+								//OUTPUT() is called on the original array
+							case 'o': Output(t_array, size);
+								break;
+
+								//OUTPUT() is called on the sorted array
+							case 's': Output(sorted_array, size);
+								break;
+
+								//return to the menu
+							case 'c': break;
+
+							default: cout << "Wrong input, please try again." << endl;
+								break;
+							}
+						}
+					}
+					else
+					{
+						//OUTPUT() is called
+						Output(t_array, size);
+						break;
+					}
+				}
+				else
+				{
+					cout << "Error: The array is not created." << endl;
+					break;
+				}
+			}
+
+			//return
+			case '5':
+				break;
+
+			default: cout << "Wrong input, try again." << endl;
+				break;
+			}
+
+		} while (selector != '5');
+
+
+		//cout << endl << "Deleting the main array." << endl;//DEBUG
+		delete[] t_array;																					//DELETE t_array[]
+		//cout << "Deleting the sorted array." << endl;//DEBUG
+		delete[] sorted_array;																				//DELETE sorted_array[]
+		//cout << "Arrays deleted." << endl;//DEBUG
+	}
 
 private:
+	char selector = 'a';															//main menu selector
+
+	const unsigned int max_size = 50;									//maximal size of the array
+	unsigned int size = 0;												//user-defined size of the array, 0 by default
+
+	int* t_array = new int[max_size];									//t_array announcement
+	int* sorted_array = new int[max_size];								//sorted array
+
+	//states
+	bool is_created = false;											//whether the array is created or not
+	bool is_sorted = false;												//state of the array (sorted/not sorted)
+
+
+	void Input(T t_array, unsigned int size) override
+	{
+		unsigned int i;																			//iterator
+		char selector = 'n';																	//local selector
+
+		cout << endl << "----INPUT----" << endl;
+
+		//if the array is already created, reallocate the memory. s3_array_size handles the confirmation now
+
+		//filling the array
+		cout << "Filling the array with " << size << " element(s)." << endl;
+		for (i = 0; i < size; i++) {
+			cout << "Element #" << i << ": ";
+			cin >> t_array[i];
+		}
+
+		cout << "Array created";
+
+
+		cout << endl << "----INPUT END----" << endl;
+		//return *t_array;																		//-> *t_array
+	}
+
+	void Output(const T t_array, unsigned int size) override
+	{
+		int* borders = new int[2];
+
+		char selector = '0';
+
+
+		cout << endl;
+		cout << "----OUTPUT MENU----";
+		cout << endl;
+
+
+		do
+		{
+			cout << " 1. The greatest element" << endl;
+			cout << " 2. The product of the elements between zeroes" << endl;
+			cout << " 3. Array output" << endl;
+			cout << " 5. Return" << endl;
+			cout << "Your selection: ";
+			cin >> selector;
+
+			switch (selector)
+			{
+				//max_pos calculation
+			case '1':
+			{
+				unsigned int max_pos = max_position(t_array, size);
+				cout << endl << "The position of the greatest element is #" << max_pos << " (" << t_array[max_pos] << ")";
+				cout << endl;
+				break;
+			}
+
+			//product calculation
+			case '2':
+			{
+				borders = product(t_array, size);
+				display_product(t_array, borders);
+
+				break;
+			}
+
+			//array output
+			case'3':
+			{
+				display_array(t_array, size);
+
+				break;
+			}
+
+			//return
+			case '5': break;
+
+			default: cout << "Wrong input, please try again."
+				<< endl;
+			}
+
+		} while (selector != '5');
+
+
+		delete[] borders;
+
+		cout << endl;
+		cout << "----OUTPUT END----";
+		cout << endl;
+	}
+
+	int array_size(const unsigned int max_size);
+
+
 	int max_position(const int* t_array, unsigned int size);
 	int* product(const int* t_array, unsigned int size);
 	void display_product(const int* t_array, int* borders);
@@ -43,30 +306,6 @@ int Seminar3<void>::array_size(const unsigned int max_size)
 
 
 	return user_size;
-}
-
-//INPUT(), fills the array
-void Seminar3<void>::Input(int* t_array, unsigned int size)
-{
-	unsigned int i;																			//iterator
-	char selector = 'n';																	//local selector
-
-	cout << endl << "----INPUT----" << endl;
-
-	//if the array is already created, reallocate the memory. s3_array_size handles the confirmation now
-
-	//filling the array
-	cout << "Filling the array with " << size << " element(s)." << endl;
-	for (i = 0; i < size; i++) {
-		cout << "Element #" << i << ": ";
-		cin >> t_array[i];
-	}
-
-	cout << "Array created";
-
-
-	cout << endl << "----INPUT END----" << endl;
-	//return *t_array;																		//-> *t_array
 }
 
 
@@ -184,72 +423,6 @@ void Seminar3<void>::display_array(const int* t_array, unsigned int size)
 }
 
 
-//int OUTPUT() -> 0, handles the output of the values and the array
-void Seminar3<void>::Output(const int* t_array, unsigned int size)
-{
-	int* borders = new int[2];
-
-	char selector = '0';
-
-
-	cout << endl;
-	cout << "----OUTPUT MENU----";
-	cout << endl;
-
-
-	do
-	{
-		cout << " 1. The greatest element" << endl;
-		cout << " 2. The product of the elements between zeroes" << endl;
-		cout << " 3. Array output" << endl;
-		cout << " 5. Return" << endl;
-		cout << "Your selection: ";
-		cin >> selector;
-
-		switch (selector)
-		{
-			//max_pos calculation
-		case '1':
-		{
-			unsigned int max_pos = max_position(t_array, size);
-			cout << endl << "The position of the greatest element is #" << max_pos << " (" << t_array[max_pos] << ")";
-			cout << endl;
-			break;
-		}
-
-		//product calculation
-		case '2':
-		{
-			borders = product(t_array, size);
-			display_product(t_array, borders);
-
-			break;
-		}
-
-		//array output
-		case'3':
-		{
-			display_array(t_array, size);
-
-			break;
-		}
-
-		//return
-		case '5': break;
-
-		default: cout << "Wrong input, please try again."
-			<< endl;
-		}
-
-	} while (selector != '5');
-
-
-	delete[] borders;
-
-	cout << endl;
-	cout << "----OUTPUT END----";
-	cout << endl;
-}
 
 
 
