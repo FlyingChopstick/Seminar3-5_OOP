@@ -21,7 +21,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Seminar_3.cpp">
+    <ClCompile Include="Seminar4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Seminar3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,13 +32,13 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="classes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Root.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Seminar3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Seminar4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

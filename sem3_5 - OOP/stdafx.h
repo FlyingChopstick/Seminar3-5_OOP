@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include "Root.h"
 
 using std::cin;
 using std::cout;
