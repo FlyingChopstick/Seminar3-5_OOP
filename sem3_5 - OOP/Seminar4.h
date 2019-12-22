@@ -5,7 +5,7 @@
 
 using std::ifstream;
 
-template <class T>
+template <typename T>
 class Seminar4 :
 	private Root<T>
 {
@@ -16,13 +16,25 @@ public:
 		for (unsigned int i = 0; i < max_dimension; i++)
 			t_array[i] = new T[max_dimension];
 
+		Seminar4::Menu();
 	}
 
 	void Menu() override;
-	void Input(T* t_array, unsigned int size) override;
+	void Input(T* t_array, unsigned int size) override {}
 	void Input(T** t_array, unsigned int size) override;
-	void Output(const T* t_array, unsigned int size) override;
-	void Output(const T** t_array, unsigned int size) override;
+	void Output(T* t_array, unsigned int size) override {}
+	void Output(T** t_array, unsigned int size) override;
+
+
+	~Seminar4()
+	{
+		//array deletion
+		//cout << endl << "Deleting the array." << endl;//DEBUG
+		for (unsigned int i = 0; i < max_dimension; i++)
+			delete[] t_array[i];
+		delete[] t_array;
+		//cout << "Array deleted." << endl;//DEBUG
+	}
 
 private:
 	bool is_created = false;
@@ -43,15 +55,7 @@ private:
 	void display_identical(T* target, unsigned int dimension);
 	void display_search(T** target, unsigned int dimension);
 
-	~Seminar4()
-	{
-		//array deletion
-		//cout << endl << "Deleting the array." << endl;//DEBUG
-		for (unsigned int i = 0; i < max_dimension; i++)
-			delete[] t_array[i];
-		delete[] t_array;
-		//cout << "Array deleted." << endl;//DEBUG
-	}
+
 };
 
 
@@ -102,7 +106,7 @@ template <typename T> void Seminar4<T>::Menu()
 					case 'y':
 					{
 						dimension = array_dimension(max_dimension);
-						input(t_array, dimension);																//INPUT() is called -> t_array
+						Input(t_array, dimension);																//INPUT() is called -> t_array
 						is_created = true;																		//array state change (creation)
 
 						break;
@@ -119,7 +123,7 @@ template <typename T> void Seminar4<T>::Menu()
 			else
 			{
 				dimension = array_dimension(max_dimension);
-				input(t_array, dimension);																	//INPUT() is called -> t_array
+				Input(t_array, dimension);																	//INPUT() is called -> t_array
 				is_created = true;																		//array state change (creation)
 			}
 
@@ -131,7 +135,7 @@ template <typename T> void Seminar4<T>::Menu()
 		case '2':
 		{
 			if (is_created == true)
-				output(t_array, dimension);
+				Output(t_array, dimension);
 			else
 			{
 				cout << "Error: The array is not created.";
@@ -154,6 +158,8 @@ template <typename T> void Seminar4<T>::Menu()
 
 
 }
+
+
 //INPUT(), handles the array input
 template <typename T> void Seminar4<T>::Input(T** t_array, unsigned int size)
 {
@@ -247,7 +253,7 @@ template <typename T> void Seminar4<T>::Input(T** t_array, unsigned int size)
 	cout << endl;
 }
 //OUTPUT(), handles the array output
-template <typename T> void Seminar4<T>::Output(const T** t_array, unsigned int size)
+template <typename T> void Seminar4<T>::Output(T** t_array, unsigned int size)
 {
 	unsigned int i;
 	char selector = 'n';
@@ -291,7 +297,7 @@ template <typename T> void Seminar4<T>::Output(const T** t_array, unsigned int s
 
 		case '3':
 		{
-			display_array_2d(t_array, dimension);
+			display_array(t_array, dimension);
 			cout << endl;
 			break;
 		}

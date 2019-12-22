@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "Root.h"
 
-template <class T>
+template <typename T>
 class Seminar3 :
 	private Root<T>
 {
@@ -19,11 +19,11 @@ public:
 	}
 
 	void Menu() override;
-	void Input(T* t_array, unsigned int size) override;
-	void Input(T** t_array, unsigned int size) override;
+	void Input(T* t_array, unsigned int size);
+	void Input(T** t_array, unsigned int size) override {}
 
-	void Output(const T* t_array, unsigned int size) override;
-	void Output(const T** t_array, unsigned int size) override;
+	void Output(T* t_array, unsigned int size);
+	void Output(T** t_array, unsigned int size) override {}
 
 	~Seminar3()
 	{
@@ -226,7 +226,7 @@ template <typename T> void Seminar3<T>::Input(T* t_array, unsigned int size)
 	//return *t_array;																		//-> *t_array
 };
 //OUTPUT(), handles the output menu of Sem3
-template <typename T> void Seminar3<T>::Output(const T* t_array, unsigned int size)
+template <typename T> void Seminar3<T>::Output(T* t_array, unsigned int size)
 {
 	int* borders = new int[2];
 
@@ -366,7 +366,7 @@ template<typename T> int* Seminar3<T>::product(const T* t_array, unsigned int si
 //CALCULATE_PRODUCT(), calculates the product of elements between first two 0
 template<typename T> void Seminar3<T>::display_product(const T* t_array, int* borders)
 {
-	T result = 1.0;																//product
+	T result = 1.00f;																//product
 	unsigned int i;
 
 	//output determination

@@ -150,14 +150,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Seminar4.cpp" />
-    <ClCompile Include="Seminar3.cpp" />
     <ClCompile Include="stadafx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Root.h" />
     <ClInclude Include="Seminar3.h" />
     <ClInclude Include="Seminar4.h" />
+    <ClInclude Include="Seminar5.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
